@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Application - Union University College of Pharmacy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #8B0000 0%, #DC143C 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .logo::before {
+            content: "🧪";
+            font-size: 40px;
+            animation: bubble 2s ease-in-out infinite;
+        }
+
+        @keyframes bubble {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 15px 20px;
+            text-align: center;
+            background: transparent;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: #666;
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, #8B0000, #DC143C);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(139, 0, 0, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        input[type="text"], input[type="email"], select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #8B0000;
+            box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .radio-option:hover {
+            background: rgba(139, 0, 0, 0.05);
+            border-color: #8B0000;
+        }
+
+        .radio-option input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-option:hover {
+            background: rgba(139, 0, 0, 0.05);
+            border-color: #8B0000;
+        }
+
+        .checkbox-option input[type="checkbox"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8B0000, #DC143C);
+            color: white;
+            box-shadow: 0 10px 20px rgba(139, 0, 0, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(139, 0, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+            transform: translateY(-2px);
+        }
+
+        .progress-bar {
+            background: #e1e8ed;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #8B0000, #DC143C);
+            transition: width 0.5s ease;
+        }
+
+        .status-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid #8B0000;
+        }
+
+        .status-pending { border-left-color: #f39c12; }
+        .status-approved { border-left-color: #27ae60; }
+        .status-rejected { border-left-color: #e74c3c; }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background: #27ae60;
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            background: #e74c3c;
+        }
+
+        .application-list {
+            margin-top: 20px;
+        }
+
+        .application-item {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .application-info h3 {
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        .application-meta {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .status-badge {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-badge.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-badge.approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-badge.rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo"></div>
+            <h1>Student Research Portal</h1>
+            <p class="subtitle">Union University College of Pharmacy</p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('application')">Submit Application</button>
+            <button class="nav-tab" onclick="showTab('status')">Check Status</button>
+        </div>
+
+        <div id="application" class="tab-content active">
+            <h2 style="margin-bottom: 30px; color: #2c3e50;">Research Application</h2>
+            
+            <div style="background: rgba(255, 255, 255, 0.7); border-radius: 10px; padding: 20px; margin-bottom: 30px; border-left: 5px solid #8B0000;">
+                <h3 style="color: #8B0000; margin-bottom: 15px;">📋 Prerequisites</h3>
+                <p style="margin-bottom: 15px;">To be eligible for a research project at UUCOP, you must have:</p>
+                <ul style="margin-left: 20px; color: #333;">
+                    <li>Investigation Review Board (IRB) Tutorial completed</li>
+                    <li>Statement of interest (300-1000 words) addressing your research motivations</li>
+                    <li>Discussed research interest with mentor and received approval</li>
+                </ul>
+                <p style="margin-top: 15px; font-style: italic; color: #666;">
+                    <strong>Note:</strong> The IRB tutorial is available at <a href="https://uu.edu/research/irb/tutorial" target="_blank" style="color: #8B0000;">uu.edu/research/irb/tutorial</a>
+                </p>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+            <p style="text-align: center; color: #7f8c8d; margin-bottom: 30px;">Application Progress: <span id="progressText">0% Complete</span></p>
+
+            <form id="researchForm">
+                <div class="form-group">
+                    <label for="studentName">Your Name <span class="required">*</span></label>
+                    <input type="text" id="studentName" name="studentName" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Pharmacy Class <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="p1" name="pharmacyClass" value="First Year (P1)" required>
+                            <label for="p1">First Year (P1)</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="p2" name="pharmacyClass" value="Second Year (P2)">
+                            <label for="p2">Second Year (P2)</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="p3" name="pharmacyClass" value="Third Year (P3)">
+                            <label for="p3">Third Year (P3)</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="p4" name="pharmacyClass" value="Fourth Year (P4)">
+                            <label for="p4">Fourth Year (P4)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Research Interests (Select all that apply) <span class="required">*</span></label>
+                    <div class="checkbox-group" id="researchInterests">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="pharmsci" value="Pharmaceutical Sciences">
+                            <label for="pharmsci">Pharmaceutical Sciences</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="ambulatory" value="Ambulatory Care">
+                            <label for="ambulatory">Ambulatory Care</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="behavioral" value="Behavioral Studies">
+                            <label for="behavioral">Behavioral Studies</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="community" value="Community Pharmacy">
+                            <label for="community">Community Pharmacy</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="internal" value="Internal Medicine/Critical Care">
+                            <label for="internal">Internal Medicine/Critical Care</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="pharmaco" value="Pharmacometrics/Pharmacokinetics">
+                            <label for="pharmaco">Pharmacometrics/Pharmacokinetics</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="teaching" value="Scholarship of Teaching and Learning">
+                            <label for="teaching">Scholarship of Teaching and Learning</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="safety" value="Medication Safety">
+                            <label for="safety">Medication Safety</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="oncology" value="Oncology">
+                            <label for="oncology">Oncology</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="other" value="Other">
+                            <label for="other">Other</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" id="otherInterestGroup" style="display: none;">
+                    <label for="otherInterest">Please specify other research interest:</label>
+                    <textarea id="otherInterest" name="otherInterest" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="irbCert">IRB Certification Completed <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="irbYes" name="irbCert" value="completed" required>
+                            <label for="irbYes">Yes, I have completed the IRB certification tutorial</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="irbNo" name="irbCert" value="not-completed">
+                            <label for="irbNo">No, I have not completed the IRB certification tutorial</label>
+                        </div>
+                    </div>
+                    <small style="color: #7f8c8d; margin-top: 10px; display: block;">
+                        <strong>Note:</strong> IRB certification tutorial is available at <a href="https://uu.edu/research/irb/tutorial" target="_blank" style="color: #8B0000;">uu.edu/research/irb/tutorial</a>
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="statement">Statement of Interest <span class="required">*</span></label>
+                    <textarea id="statement" name="statement" rows="8" placeholder="Minimum 300 words, maximum 1000 words. Address: why you're interested in research, what type of research interests you, any previous experience, and anything else noteworthy." required></textarea>
+                    <small id="wordCount" style="color: #7f8c8d;">Word count: 0</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="mentorApproval">
+                        <input type="checkbox" id="mentorApproval" name="mentorApproval" required style="margin-right: 10px;">
+                        I have discussed research interest with a mentor and received approval <span class="required">*</span>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="studentEmail">Email Address <span class="required">*</span></label>
+                    <input type="email" id="studentEmail" name="studentEmail" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit Application</button>
+            </form>
+        </div>
+
+        <div id="status" class="tab-content">
+            <h2 style="margin-bottom: 30px; color: #2c3e50;">Application Status</h2>
+            
+            <div class="form-group">
+                <label for="statusEmail">Enter your email to check status:</label>
+                <input type="email" id="statusEmail" placeholder="your.email@uu.edu">
+                <button type="button" class="btn btn-secondary" onclick="checkStatus()" style="margin-top: 10px;">Check Status</button>
+            </div>
+
+            <div class="application-list" id="applicationList">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <div id="notification" class="notification">
+        <span id="notificationText"></span>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        function showTab(tabName) {
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(tab => tab.classList.remove('active'));
+            
+            const navTabs = document.querySelectorAll('.nav-tab');
+            navTabs.forEach(tab => tab.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Progress tracking
+        function updateProgress() {
+            let completedFields = 0;
+            let totalRequiredFields = 7;
+            
+            const studentName = document.getElementById('studentName');
+            if (studentName.value.trim()) {
+                completedFields++;
+            }
+            
+            const pharmacyClass = document.querySelector('input[name="pharmacyClass"]:checked');
+            if (pharmacyClass) {
+                completedFields++;
+            }
+            
+            const researchInterests = document.querySelectorAll('#researchInterests input:checked');
+            if (researchInterests.length > 0) {
+                completedFields++;
+            }
+            
+            const statement = document.getElementById('statement');
+            const wordCount = statement.value.trim().split(/\s+/).filter(word => word.length > 0).length;
+            if (wordCount >= 300 && wordCount <= 1000) {
+                completedFields++;
+            }
+            
+            const irbCert = document.querySelector('input[name="irbCert"]:checked');
+            if (irbCert && irbCert.value === 'completed') {
+                completedFields++;
+            }
+            
+            const mentorApproval = document.getElementById('mentorApproval');
+            if (mentorApproval.checked) {
+                completedFields++;
+            }
+            
+            const email = document.getElementById('studentEmail');
+            if (email.value.trim() && email.value.includes('@')) {
+                completedFields++;
+            }
+            
+            const progress = Math.round((completedFields / totalRequiredFields) * 100);
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = progress + '% Complete';
+        }
+
+        // Word count for statement
+        document.getElementById('statement').addEventListener('input', function() {
+            const words = this.value.trim().split(/\s+/).filter(word => word.length > 0);
+            const wordCount = words.length;
+            const wordCountElement = document.getElementById('wordCount');
+            
+            wordCountElement.textContent = `Word count: ${wordCount}`;
+            
+            if (wordCount < 300) {
+                wordCountElement.style.color = '#e74c3c';
+                wordCountElement.textContent += ` (minimum 300 words required)`;
+            } else if (wordCount > 1000) {
+                wordCountElement.style.color = '#e74c3c';
+                wordCountElement.textContent += ` (maximum 1000 words exceeded)`;
+            } else {
+                wordCountElement.style.color = '#27ae60';
+            }
+            
+            updateProgress();
+        });
+
+        // Show/hide other interest field
+        document.getElementById('other').addEventListener('change', function() {
+            const otherGroup = document.getElementById('otherInterestGroup');
+            otherGroup.style.display = this.checked ? 'block' : 'none';
+        });
+
+        // Add event listeners for progress tracking
+        document.getElementById('researchForm').addEventListener('input', updateProgress);
+        document.getElementById('researchForm').addEventListener('change', updateProgress);
+
+        // Enhanced submission success display
+        function showSubmissionSuccess(applicationData) {
+            const successModal = document.createElement('div');
+            successModal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                animation: fadeIn 0.3s ease;
+            `;
+            
+            successModal.innerHTML = `
+                <div style="background: white; border-radius: 20px; padding: 40px; min-width: 500px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+                    <div style="font-size: 4rem; margin-bottom: 20px;">🎉</div>
+                    <h2 style="color: #27ae60; margin-bottom: 20px;">Application Submitted Successfully!</h2>
+                    <div style="background: #f8f9fa; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: left;">
+                        <h3 style="color: #8B0000; margin-bottom: 15px;">Application Details:</h3>
+                        <p><strong>Application ID:</strong> ${applicationData.id}</p>
+                        <p><strong>Student:</strong> ${applicationData.name}</p>
+                        <p><strong>Email:</strong> ${applicationData.email}</p>
+                        <p><strong>Class:</strong> ${applicationData.class}</p>
+                        <p><strong>Primary Interests:</strong> ${applicationData.interests.join(', ')}</p>
+                        <p><strong>Submitted:</strong> ${applicationData.submittedDate}</p>
+                        <p><strong>Status:</strong> <span style="color: #f39c12; font-weight: bold;">Pending Review</span></p>
+                    </div>
+                    <div style="background: #e8f5e8; border-radius: 10px; padding: 20px; margin: 20px 0;">
+                        <h4 style="color: #27ae60; margin-bottom: 10px;">📧 What Happens Next:</h4>
+                        <ul style="text-align: left; color: #666;">
+                            <li>✅ Confirmation email sent to ${applicationData.email}</li>
+                            <li>📋 Faculty notification sent to research committee</li>
+                            <li>👥 Application added to faculty dashboard for review</li>
+                            <li>📞 You'll hear back within 1-2 weeks</li>
+                        </ul>
+                    </div>
+                    <button onclick="this.parentElement.parentElement.remove()" style="background: #8B0000; color: white; border: none; padding: 15px 30px; border-radius: 10px; font-size: 16px; cursor: pointer; margin-top: 20px;">Close</button>
+                </div>
+            `;
+            
+            document.body.appendChild(successModal);
+            
+            setTimeout(() => {
+                if (document.body.contains(successModal)) {
+                    successModal.remove();
+                }
+            }, 10000);
+        }
+
+        // Notification system
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            
+            notificationText.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 4000);
+        }
+
+        // Form submission
+        document.getElementById('researchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const statement = document.getElementById('statement');
+            const wordCount = statement.value.trim().split(/\s+/).filter(word => word.length > 0).length;
+            
+            if (wordCount < 300 || wordCount > 1000) {
+                showNotification('Statement must be between 300-1000 words', 'error');
+                return;
+            }
+            
+            const irbCompleted = document.querySelector('input[name="irbCert"]:checked');
+            if (irbCompleted && irbCompleted.value === 'not-completed') {
+                showNotification('Please complete the IRB certification tutorial before submitting', 'error');
+                return;
+            }
+            
+            const submitBtn = document.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                const formData = new FormData(this);
+                const applicationData = {
+                    id: 'APP-' + Date.now(),
+                    name: formData.get('studentName'),
+                    email: formData.get('studentEmail'),
+                    class: formData.get('pharmacyClass'),
+                    interests: Array.from(document.querySelectorAll('#researchInterests input:checked')).map(cb => cb.value),
+                    status: 'pending',
+                    submittedDate: new Date().toLocaleDateString(),
+                    wordCount: wordCount
+                };
+                
+                showSubmissionSuccess(applicationData);
+                
+                this.reset();
+                updateProgress();
+                
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+            }, 2000);
+        });
+
+        // Status checking
+        function checkStatus() {
+            const email = document.getElementById('statusEmail').value;
+            if (!email) {
+                showNotification('Please enter your email address', 'error');
+                return;
+            }
+            
+            const sampleApplications = [
+                {
+                    id: 'APP-1001',
+                    name: 'Current Application',
+                    status: 'Under Review',
+                    submittedDate: '2025-05-25',
+                    interests: 'Pharmaceutical Sciences, Oncology'
+                },
+                {
+                    id: 'APP-1000',
+                    name: 'Previous Application',
+                    status: 'Approved',
+                    submittedDate: '2025-01-15',
+                    interests: 'Medication Safety'
+                }
+            ];
+            
+            displayApplicationStatus(sampleApplications);
+        }
+
+        function displayApplicationStatus(applications) {
+            const listElement = document.getElementById('applicationList');
+            
+            if (applications.length === 0) {
+                listElement.innerHTML = '<p style="text-align: center; color: #7f8c8d; margin: 40px 0;">No applications found for this email address.</p>';
+                return;
+            }
+            
+            listElement.innerHTML = applications.map(app => `
+                <div class="status-card status-${app.status.toLowerCase().replace(' ', '-')}">
+                    <h3>Application #${app.id}</h3>
+                    <p><strong>Submitted:</strong> ${app.submittedDate}</p>
+                    <p><strong>Research Interests:</strong> ${app.interests}</p>
+                    <p><strong>Status:</strong> <span class="status-badge ${app.status.toLowerCase().replace(' ', '-')}">${app.status}</span></p>
+                    ${app.status === 'Under Review' ? '<p><em>Your application is currently being reviewed by faculty. You will receive an email notification once a decision is made.</em></p>' : ''}
+                    ${app.status === 'Approved' ? '<p><em>Congratulations! Please check your email for next steps and mentor assignment.</em></p>' : ''}
+                </div>
+            `).join('');
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
